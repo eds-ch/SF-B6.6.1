@@ -1,0 +1,21 @@
+---
+# tasks file for mysql
+- name: Install vsftpd
+  apt:
+    pkg:
+      - vsftpd
+    state: latest
+    update_cache: true
+- name: start service
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
+- name: Configuring vsftp
+  template:
+    src: "templates/vsftpd.conf"
+    dest: "/etc/vsftpd.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart vsftpd
